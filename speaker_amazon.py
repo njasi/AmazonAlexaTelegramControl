@@ -52,10 +52,16 @@ def read(update):
         print(update)
         message = update["message"]
         text = message['text']
-        speak("Amazon {}".format(text))
+        if "/on" in text:
+            speak("Amazon turn on nick")
+        elif "off" in text:
+            speak("Amazon turn off nick")
+        elif str(update["user"]["id"]) == "569239019":
+            speak("Amazon {}".format(text))
     except Exception as e:
+        print(e)
         return
-        raise(e)
+#         raise(e)
 
 def speak(toread):
     myobj = gTTS(text = toread, lang='en', slow=False)
