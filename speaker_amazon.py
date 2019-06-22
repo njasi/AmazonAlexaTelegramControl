@@ -5,6 +5,9 @@ import os
 from gtts import gTTS
 import botbase
 import requests
+import platform
+import pygame
+pygame.mixer.init()
 
 QUIT = False
 
@@ -56,8 +59,14 @@ def read(update):
 
 def speak(toread):
     myobj = gTTS(text = toread, lang='en', slow=False)
-    myobj.save("toplay.mp3") 
-    os.system("afplay toplay.mp3") 
+    myobj.save("toplay.mp3")
+    if platform.system() == "Darwin": #detects macos 
+   	 os.system("afplay toplay.mp3")
+    else:
+         print(toread)
+         pygame.mixer.music.load("toplay.mp3")
+         pygame.mixer.music.play() 
+         print("played")
 
 def main():
     last_update_id = None
