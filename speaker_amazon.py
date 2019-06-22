@@ -49,7 +49,6 @@ def is_message_with_text(update):
 
 def read(update):
     try:
-        print(update)
         message = update["message"]
         text = message['text']
         if "/on" in text:
@@ -59,7 +58,7 @@ def read(update):
         elif str(update["user"]["id"]) == "569239019":
             speak("Amazon {}".format(text))
     except Exception as e:
-        print(e)
+#         print(e)
         return
 #         raise(e)
 
