@@ -8,7 +8,9 @@ import requests
 
 QUIT = False
 
-TOKEN = "718517780:AAHlAkqvqHXK6SDcB3kaarhxfSNWoJMIWCE"
+file = open("token.txt")
+TOKEN = file.read().strip()
+file.close()
 URL = "https://api.telegram.org/bot{}/".format(TOKEN)
 BOT = botbase.BotBase(URL)
 
