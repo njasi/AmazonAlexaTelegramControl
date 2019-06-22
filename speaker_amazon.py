@@ -68,10 +68,8 @@ def speak(toread):
     if platform.system() == "Darwin": #detects macos 
    	 os.system("afplay toplay.mp3")
     else:
-         print(toread)
          pygame.mixer.music.load("toplay.mp3")
          pygame.mixer.music.play() 
-         print("played")
 
 def main():
     last_update_id = None
@@ -79,7 +77,6 @@ def main():
         updates = BOT.get_updates(last_update_id)
         if len(updates["result"]) > 0:
             last_update_id = BOT.get_last_update_id(updates) + 1
-            print(updates)
             for update in updates["result"]:
                 read(update)
         time.sleep(0.5)
