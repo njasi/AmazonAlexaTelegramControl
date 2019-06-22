@@ -49,6 +49,7 @@ def is_message_with_text(update):
 
 def read(update):
     try:
+        print(update)
         message = update["message"]
         text = message['text']
         if "/on" in text:
