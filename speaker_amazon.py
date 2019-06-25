@@ -1,4 +1,3 @@
-
 import json
 import time
 import os
@@ -29,6 +28,7 @@ tv_options = {"Display", "Hulu", ""}
 
 options = {"Lights": lights, "T.V.":tv_options} # base menu
 
+light_data = {"nick":False,"guest":False}
 ############################
 # Type of response methods #
 ############################
@@ -47,26 +47,34 @@ def is_message_with_text(update):
         return False
     return True
 
+def allow_user(id):
+    users = ["569239019"]
+    return str(id) in users
+
 def read(update):
     try:
         message = update["message"]
         text = message['text']
+        user_id = message["from"]["id"]
+        print(user_id)
         if "/on" in text:
+            light_data["nick"] = True
             speak("Amazon turn on nick")
-        elif "off" in text:
+        elif "/off" in text:
+            light_data["nick"] = False
             speak("Amazon turn off nick")
-        elif str(update["user"]["id"]) == "569239019":
+        elif allow_user(user_id):
             speak("Amazon {}".format(text))
     except Exception as e:
-#         print(e)
+        # print(e)
         return
-#         raise(e)
+        # raise(e)
 
 def speak(toread):
     myobj = gTTS(text = toread, lang='en', slow=False)
     myobj.save("toplay.mp3")
-    if platform.system() == "Darwin": #detects macos 
-   	 os.system("afplay toplay.mp3")
+    if platform.system() == "Darwin": # detects macos (for testing)
+         os.system("afplay toplay.mp3")
     else:
          pygame.mixer.music.load("toplay.mp3")
          pygame.mixer.music.play() 
