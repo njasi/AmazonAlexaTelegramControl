@@ -56,7 +56,6 @@ def read(update):
         message = update["message"]
         text = message['text']
         user_id = message["from"]["id"]
-        print(user_id)
         if "/on" in text:
             light_data["nick"] = True
             speak("Amazon turn on nick")
@@ -66,9 +65,7 @@ def read(update):
         elif allow_user(user_id):
             speak("Amazon {}".format(text))
     except Exception as e:
-        # print(e)
         return
-        # raise(e)
 
 def speak(toread):
     myobj = gTTS(text = toread, lang='en', slow=False)
