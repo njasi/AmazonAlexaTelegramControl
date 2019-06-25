@@ -58,16 +58,20 @@ def read(update):
         user_id = message["from"]["id"]
         if "/on" in text:
             light_data["nick"] = True
-            speak("Amazon turn on nick")
+            speak("Amazon turn on nick", simple = "on.mp3")
         elif "/off" in text:
             light_data["nick"] = False
-            speak("Amazon turn off nick")
+            speak("Amazon turn off nick", simple = "off.mp3")
         elif allow_user(user_id):
             speak("Amazon {}".format(text))
     except Exception as e:
         return
 
-def speak(toread):
+def speak(toread, simple = None):
+    if simple:
+        pygame.mixer.music.load(simple)
+        pygame.mixer.music.play()
+        return
     myobj = gTTS(text = toread, lang='en', slow=False)
     myobj.save("toplay.mp3")
     if platform.system() == "Darwin": # detects macos (for testing)
