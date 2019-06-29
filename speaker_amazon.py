@@ -1,11 +1,8 @@
-import json
-import time
-import os
-from gtts import gTTS
-import botbase
-import requests
-import platform
+import json, time, os, requests, platform
 import pygame
+import botbase
+from gtts import gTTS
+
 pygame.mixer.init()
 
 QUIT = False
@@ -48,7 +45,7 @@ def is_message_with_text(update):
     return True
 
 def allow_user(id):
-    users = ["569239019"]
+    users = ["569239019", "689166454"]
     return str(id) in users
 
 def read(update):
@@ -56,14 +53,18 @@ def read(update):
         message = update["message"]
         text = message['text']
         user_id = message["from"]["id"]
+        chat_id = message["chat"]["id"]
         if "/on" in text:
             light_data["nick"] = True
             speak("Amazon turn on nick", simple = "on.mp3")
+            BOT.send_message("Turned On Nick's Light!", chat_id)
         elif "/off" in text:
             light_data["nick"] = False
             speak("Amazon turn off nick", simple = "off.mp3")
+            BOT.send_message("Turned Off Nick's Light!", chat_id)
         elif allow_user(user_id):
             speak("Amazon {}".format(text))
+            BOT.send_message("Your command was spoken!", chat_id)
     except Exception as e:
         return
 
@@ -91,4 +92,4 @@ def main():
         time.sleep(0.5)
 
 if __name__ == '__main__':
-    main()  
+    main()
